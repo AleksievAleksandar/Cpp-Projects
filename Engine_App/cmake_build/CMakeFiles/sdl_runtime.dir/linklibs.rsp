@@ -1,0 +1,1 @@
+ -lmingw32 C:/mingw_dev_libs/lib/libSDL2main.a C:/mingw_dev_libs/lib/libSDL2.dll.a C:/mingw_dev_libs/lib/libSDL2_image.dll.a C:/mingw_dev_libs/lib/libSDL2_ttf.dll.a C:/mingw_dev_libs/lib/libSDL2_mixer.dll.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
