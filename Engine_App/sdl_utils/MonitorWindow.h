@@ -10,26 +10,18 @@
 //Thitrd-party includes
 
 //Own includes
-#include "../utils/drawing/Rectangle.h"
+#include "utils/drawing/Rectangle.h"
+#include "config/MonitorWindowCfg.h"
 
 //Forward Declarations
 struct SDL_Window;
-
-struct MonitorWindowCfg
-{
-	std::string windowName = "Hello, World!";
-	int32_t windowX;
-	int32_t windowY;
-	int32_t windowWidth;
-	int32_t windowHeight;
-	uint32_t windowFlags;
-};
+struct SDL_Surface;
 
 class MonitorWindow
 {
 public:
 	MonitorWindow() = default;
-
+	~MonitorWindow();
 	MonitorWindow(const MonitorWindow& other) = delete;
 	MonitorWindow(MonitorWindow&& other) = delete;
 
@@ -37,11 +29,15 @@ public:
 	MonitorWindow& operator=(MonitorWindow&& other) = delete;
 
 	int32_t init(const MonitorWindowCfg& cfg);
-	void deinit();
+	void deInit();
+	void updateWindowSurface();
+
+	//TODO
+	SDL_Surface* getWindowSurface();
 
 private:
-	SDL_Window* _window;
-	Rectangle _windowRect;
+	SDL_Window* _window = nullptr;
+	Rectangle _windowRect = Rectangle::UNDEFINED;
 };
 
 #endif // !MONITOR_WINDOW_H

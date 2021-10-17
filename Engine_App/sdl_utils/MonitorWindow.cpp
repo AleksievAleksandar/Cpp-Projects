@@ -4,6 +4,7 @@
 //C system includes
 
 //C++ system includes
+#include <iostream>
 
 //Thitrd-party includes
 #include <SDL_video.h>
@@ -13,12 +14,58 @@
 //Forward Declarations
 
 
-int32_t MonitorWindow::init(const MonitorWindowCfg& cfg)
+MonitorWindow::~MonitorWindow()
 {
-	(void)cfg;
-	return 1;
+    this->deInit();
 }
 
-void MonitorWindow::deinit()
+int32_t MonitorWindow::init(const MonitorWindowCfg& cfg)
 {
+    Point finalPos;
+    if (cfg.windowPos == Point::UNDEFINED)
+    {
+        finalPos.x = SDL_WINDOWPOS_UNDEFINED;
+        finalPos.y = SDL_WINDOWPOS_UNDEFINED;
+    }
+    else
+    {
+        finalPos = cfg.windowPos;
+    }
+
+    this->_window = SDL_CreateWindow(cfg.windowName.c_str(), finalPos.x, finalPos.y, cfg.windowWidth, cfg.windowHeight, cfg.windowFlags);
+    if (nullptr == this->_window)
+    {
+        std::cerr << "SDL_CreateWindow() failed. Reason: " << SDL_GetError() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+	return EXIT_SUCCESS;;
+}
+
+void MonitorWindow::deInit()
+{
+    if (this->_window != nullptr)
+    {
+        SDL_DestroyWindow(this->_window);
+        this->_window = nullptr;
+    }
+}
+
+void MonitorWindow::updateWindowSurface()
+{
+    if (EXIT_SUCCESS != SDL_UpdateWindowSurface(this->_window))
+    {
+        std::cerr << "SDL_UpdateWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
+    }
+}
+
+SDL_Surface* MonitorWindow::getWindowSurface()
+{
+    SDL_Surface* screenSurface = SDL_GetWindowSurface(this->_window);
+    if (nullptr == screenSurface)
+    {
+        std::cerr << "SDL_GetWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
+        return nullptr;
+    }
+    return screenSurface;
 }
