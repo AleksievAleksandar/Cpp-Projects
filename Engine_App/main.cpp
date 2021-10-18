@@ -9,7 +9,8 @@
 //Thitrd-party includes
 
 //Own includes
-#include"engine/Engine.h"
+#include "engine/Engine.h"
+#include "engine/EngineConfigLoader.h"
 #include "sdl_utils/SDLLoader.h"
 
 //Forward Declarations
@@ -18,7 +19,7 @@
 static int32_t runApplication()
 {
     Engine engine;
-    if (EXIT_SUCCESS != engine.init())
+    if (EXIT_SUCCESS != engine.init(EngineConfigLoader::loadConfig()))
     {
         std::cerr << "engine.init() failed." << std::endl;
         return EXIT_FAILURE;

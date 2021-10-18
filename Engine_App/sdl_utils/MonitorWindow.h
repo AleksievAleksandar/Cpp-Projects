@@ -31,9 +31,7 @@ public:
 	int32_t init(const MonitorWindowCfg& cfg);
 	void deInit();
 	void updateWindowSurface();
-
-	//TODO
-	SDL_Surface* getWindowSurface();
+	SDL_Window* getWindow();
 
 private:
 	SDL_Window* _window = nullptr;

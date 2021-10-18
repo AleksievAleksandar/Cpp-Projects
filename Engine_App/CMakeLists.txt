@@ -18,10 +18,10 @@ elseif(WIN32 OR APPLE)
 	set(SDL2_mixer_name SDL2_MIXER)
 endif()
 
+find_package(SDL2 REQUIRED)
 find_package(${SDL2_image_name} REQUIRED)
 find_package(${SDL2_ttf_name} REQUIRED)
 find_package(${SDL2_mixer_name} REQUIRED)
-find_package(SDL2 REQUIRED)
 
 set(_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -32,9 +32,20 @@ add_executable(
 		${_BASE_DIR}/utils/drawing/Rectangle.h
 		${_BASE_DIR}/utils/drawing/Rectangle.cpp
 		${_BASE_DIR}/utils/input/EventDefines.h
+		${_BASE_DIR}/utils/thread/ThreadUtils.h
+		${_BASE_DIR}/utils/thread/ThreadUtils.cpp
+		${_BASE_DIR}/utils/time/Time.h
+		${_BASE_DIR}/utils/time/Time.cpp
 
 		${_BASE_DIR}/engine/Engine.h
 		${_BASE_DIR}/engine/Engine.cpp
+		${_BASE_DIR}/engine/EngineConfigLoader.h
+		${_BASE_DIR}/engine/EngineConfigLoader.cpp
+		${_BASE_DIR}/engine/config/EngineConfig.h
+
+		${_BASE_DIR}/game/Game.h
+		${_BASE_DIR}/game/Game.cpp
+		${_BASE_DIR}/game/config/GameCfg.h
 
 		${_BASE_DIR}/sdl_utils/SDLLoader.h
 		${_BASE_DIR}/sdl_utils/SDLLoader.cpp
@@ -45,6 +56,8 @@ add_executable(
 		${_BASE_DIR}/sdl_utils/Texture.cpp
 		${_BASE_DIR}/sdl_utils/InputEvent.h
 		${_BASE_DIR}/sdl_utils/InputEvent.cpp
+		${_BASE_DIR}/sdl_utils/Renderer.h
+		${_BASE_DIR}/sdl_utils/Renderer.cpp
 
 		${_BASE_DIR}/main.cpp
 )

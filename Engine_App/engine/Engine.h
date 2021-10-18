@@ -9,16 +9,19 @@
 //Thitrd-party includes
 
 //Own includes
+#include "game/Game.h"
 #include "sdl_utils/MonitorWindow.h"
 #include "sdl_utils/InputEvent.h"
+#include "sdl_utils/Renderer.h"
 
 //Forward Declarations
-struct SDL_Surface;
+struct EngineConfig;
+
 
 class Engine
 {
 public:
-	int32_t init();
+	int32_t init(const EngineConfig& cfg);
 	void deInit();
 	void start();
 
@@ -28,12 +31,12 @@ private:
 	bool processFrame();
 	void handleEvent();
 
-	int32_t loadResources();
+	void limitFPS(const int64_t elapsedTimeMicroSeconds) const;
 
 	MonitorWindow _window;
 	InputEvent _event;
-	SDL_Surface* _screenSurface = nullptr;
-	SDL_Surface* _image = nullptr;
+	Renderer _renderer;
+	Game _game;
 };
 
 #endif // !ENGINE_H

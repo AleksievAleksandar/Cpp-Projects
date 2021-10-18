@@ -59,13 +59,7 @@ void MonitorWindow::updateWindowSurface()
     }
 }
 
-SDL_Surface* MonitorWindow::getWindowSurface()
+SDL_Window* MonitorWindow::getWindow()
 {
-    SDL_Surface* screenSurface = SDL_GetWindowSurface(this->_window);
-    if (nullptr == screenSurface)
-    {
-        std::cerr << "SDL_GetWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
-        return nullptr;
-    }
-    return screenSurface;
+    return this->_window;
 }

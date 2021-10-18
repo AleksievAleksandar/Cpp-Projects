@@ -9,11 +9,16 @@
 //Thitrd-party includes
 #include <SDL_surface.h>
 #include <SDL_image.h>
+#include <SDL_render.h>
 
 //Own includes
 
 //Forward Declarations
 
+namespace 
+{
+    SDL_Renderer* globalRenderer = nullptr;
+}
 
 int32_t Texture::createSurfaceFromFile(const std::string& filePath, SDL_Surface*& outSurface)
 {
@@ -35,4 +40,51 @@ void Texture::freeSurface(SDL_Surface*& outSurface)
         SDL_FreeSurface(outSurface);
         outSurface = nullptr;
     }
+}
+
+int32_t Texture::createTextureFromFile(const std::string& filePath, SDL_Texture*& outTexture)
+{
+    SDL_Surface* tempSurface = nullptr;
+    if (EXIT_SUCCESS != createSurfaceFromFile(filePath, tempSurface))
+    {
+        std::cerr << "createSurfaceFromFile() failed for filePath: " << filePath << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    if (EXIT_SUCCESS != createTextureFromSurface(tempSurface, outTexture))
+    {
+        std::cerr << "createTextureFromSurface() failed for filePath: " << filePath << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int32_t Texture::createTextureFromSurface(SDL_Surface*& inOutSurface, SDL_Texture*& outTexture)
+{
+    outTexture = SDL_CreateTextureFromSurface(globalRenderer, inOutSurface);
+
+    if (outTexture == nullptr)
+    {
+        std::cerr << "SDL_CreateTextureFromSurface() failed. Reason: " << SDL_GetError() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    freeSurface(inOutSurface);
+
+    return EXIT_SUCCESS;
+}
+
+void Texture::freeTexture(SDL_Texture*& outTexture)
+{
+    if (outTexture != nullptr)
+    {
+        SDL_DestroyTexture(outTexture);
+        outTexture = nullptr;
+    }
+}
+
+void Texture::setRenderer(SDL_Renderer* renderer)
+{
+    globalRenderer = renderer;
 }

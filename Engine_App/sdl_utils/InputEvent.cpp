@@ -12,9 +12,6 @@
 
 //Own includes
 
-//Forward Declarations
-
-
 
 int32_t InputEvent::init()
 {
