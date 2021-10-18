@@ -1,3 +1,0 @@
-D:/Aleksandar/Projects/Cpp Projects/SoftUni/Cpp_Master_Class/App_Engine/App_Engine/build/CMakeFiles/App_Engine.dir
-D:/Aleksandar/Projects/Cpp Projects/SoftUni/Cpp_Master_Class/App_Engine/App_Engine/build/CMakeFiles/edit_cache.dir
-D:/Aleksandar/Projects/Cpp Projects/SoftUni/Cpp_Master_Class/App_Engine/App_Engine/build/CMakeFiles/rebuild_cache.dir
