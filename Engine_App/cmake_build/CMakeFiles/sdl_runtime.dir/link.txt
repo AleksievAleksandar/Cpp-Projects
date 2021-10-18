@@ -1,3 +1,0 @@
-C:\cmake\bin\cmake.exe -E rm -f CMakeFiles\sdl_runtime.dir/objects.a
-C:\MinGW\bin\ar.exe qc CMakeFiles\sdl_runtime.dir/objects.a @CMakeFiles\sdl_runtime.dir\objects1.rsp
-C:\MinGW\bin\g++.exe -Wl,--whole-archive CMakeFiles\sdl_runtime.dir/objects.a -Wl,--no-whole-archive -o sdl_runtime.exe -Wl,--out-implib,libsdl_runtime.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\sdl_runtime.dir\linklibs.rsp

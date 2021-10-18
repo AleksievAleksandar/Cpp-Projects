@@ -1,3 +1,0 @@
-D:/Aleksandar/Projects/Cpp Projects/SoftUni/Cpp_Master_Class/App_Development/App_Development/SDL_Runtime/cmake_build/CMakeFiles/sdl_runtime.dir
-D:/Aleksandar/Projects/Cpp Projects/SoftUni/Cpp_Master_Class/App_Development/App_Development/SDL_Runtime/cmake_build/CMakeFiles/edit_cache.dir
-D:/Aleksandar/Projects/Cpp Projects/SoftUni/Cpp_Master_Class/App_Development/App_Development/SDL_Runtime/cmake_build/CMakeFiles/rebuild_cache.dir
