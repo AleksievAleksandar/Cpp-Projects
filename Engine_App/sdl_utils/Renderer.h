@@ -9,6 +9,7 @@
 //Thitrd-party includes
 
 //Own includes
+#include "utils/drawing/DrawParams.h"
 
 //Forward Declarations
 struct SDL_Renderer;
@@ -30,7 +31,7 @@ public:
 	void deInit();
 	void clearScreen();
 	void finishFrame();
-	void renderTexture(SDL_Texture* texture);
+	void renderTexture(SDL_Texture* texture, const DrawParams& drawParam);
 
 private:
 	SDL_Renderer* _sdlRenderer = nullptr;

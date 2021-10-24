@@ -7,17 +7,12 @@
 #include <cstring>
 #include <iostream>
 
-
 //Thitrd-party includes
 
 //Own includes
 #include "utils/thread/ThreadUtils.h"
 #include "utils/time/Time.h"
-#include "config/EngineConfig.h"
-//#include "game/config/GameCfg.h"
-
-//Forward Declarations
-//struct SDL_Surface;
+#include "engine/config/EngineConfig.h"
 
 
 int32_t Engine::init(const EngineConfig& cfg)
@@ -34,13 +29,19 @@ int32_t Engine::init(const EngineConfig& cfg)
 		return EXIT_FAILURE;
 	}
 
+	if (EXIT_SUCCESS != this->_imageContainer.init(cfg.imageContainerCfg))
+	{
+		std::cerr << "_imageContainer.init() failed." << std::endl;
+		return EXIT_FAILURE;
+	}
+
 	if (EXIT_SUCCESS != this->_event.init())
 	{
 		std::cerr << "_event.init() failed." << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	if (EXIT_SUCCESS != this->_game.init(cfg.gameCfg))
+	if (EXIT_SUCCESS != this->_game.init(cfg.gameCfg, &(this->_imageContainer)))
 	{
 		std::cerr << "_game.init() failed." << std::endl;
 		return EXIT_FAILURE;
@@ -53,6 +54,7 @@ void Engine::deInit()
 {
 	this->_game.deInit();
 	this->_event.deInit();
+	this->_imageContainer.deInit();
 	this->_renderer.deInit();
 	this->_window.deInit();
 }
@@ -81,12 +83,14 @@ void Engine::drawFrame()
 {
 	this->_renderer.clearScreen();
 
-	std::vector<SDL_Texture*> images;
+	std::vector<DrawParams> images;
 	this->_game.draw(images);
 
-	for (auto& image : images)
+	SDL_Texture* texture = nullptr;
+	for (const DrawParams& image : images)
 	{
-		this->_renderer.renderTexture(image);
+		texture = this->_imageContainer.getImageTexture(image.rsrcId);
+		this->_renderer.renderTexture(texture, image);
 	}
 
 	this->_renderer.finishFrame();

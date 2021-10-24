@@ -10,58 +10,52 @@
 
 //Own includes
 #include "sdl_utils/InputEvent.h"
-#include "sdl_utils/Texture.h"
+#include "sdl_utils/containers/ImageContainer.h"
 
 
-int32_t Game::loadResources(const std::unordered_map<GameImages, std::string>& resources)
+int32_t Game::init(const GameCfg& cfg, const ImageContainer* imgContainerInterface)
 {
-	for (const auto& pair : resources)
+	if (nullptr == imgContainerInterface)
 	{
-		if (EXIT_SUCCESS != Texture::createTextureFromFile(pair.second, this->_imageSurfaces[pair.first]))
-		{
-			std::cerr << "Texture::createSurfaceFromFile() failed for file: " << pair.second << std::endl;
-			return EXIT_FAILURE;
-		}
-	}
-	return EXIT_SUCCESS;
-}
-
-int32_t Game::init(const GameCfg& cfg)
-{
-	if (EXIT_SUCCESS != loadResources(cfg.imgPaths))
-	{
-		std::cerr << "loadResources() failed." << std::endl;
+		std::cerr << "ERROR, nullptr provided for imgContainerInterface." << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	this->_currChosenImage = this->_imageSurfaces[PRESS_KEYS];
+	this->_imageContainer = imgContainerInterface;
+
+	this->layer2Img.rsrcId = cfg.layer2RsrcId;
+	Rectangle rect = this->_imageContainer->getImageFrame(layer2Img.rsrcId);
+	this->layer2Img.width = rect.w;
+	this->layer2Img.height = rect.h;
+	this->layer2Img.pos = Point::ZERO;
+
+	this->pressKeysImg.rsrcId = cfg.pressKeysRsrcId;
+	rect = this->_imageContainer->getImageFrame(pressKeysImg.rsrcId);
+	this->pressKeysImg.width = rect.w;
+	this->pressKeysImg.height = rect.h;
+	this->pressKeysImg.pos = Point::ZERO;
+
+	this->pressKeysImg2 = this->pressKeysImg;
+	this->pressKeysImg.pos.x += 200;
 
 	return EXIT_SUCCESS;
 }
 
 void Game::deInit()
 {
-	for (int32_t i = 0; i < COUNT; ++i)
-	{
-		Texture::freeTexture(this->_imageSurfaces[i]);
-	}
+
 }
 
-void Game::draw(std::vector<SDL_Texture*>& outImages)
+void Game::draw(std::vector<DrawParams>& outImages)
 {
-	outImages.push_back(this->_currChosenImage);
-	//outImages.push_back(this->_imageSurfaces[LAYER_2]);
+	outImages.push_back(this->pressKeysImg2);
+	outImages.push_back(this->pressKeysImg);
+	//outImages.push_back(this->layer2Img);
 }
 
 void Game::handleEvent(const InputEvent& event)
 {
-	if (event.type == TouchEvent::KEYBOARD_RELEASE)
-	{
-		this->_currChosenImage = this->_imageSurfaces[PRESS_KEYS];
-		return;
-	}
-
-	if (event.type != TouchEvent::KEYBOARD_PRESS)
+	if (event.type != TouchEvent::KEYBOARD_RELEASE)
 	{
 		return;
 	}
@@ -69,19 +63,43 @@ void Game::handleEvent(const InputEvent& event)
 	switch (event.key)
 	{
 	case Keyboard::KEY_UP:
-		this->_currChosenImage = this->_imageSurfaces[UP];
+		this->pressKeysImg.pos.y -= 10;
 		break;
 
 	case Keyboard::KEY_DOWN:
-		this->_currChosenImage = this->_imageSurfaces[DOWN];
+		this->pressKeysImg.pos.y += 10;
 		break;
 
 	case Keyboard::KEY_LEFT:
-		this->_currChosenImage = this->_imageSurfaces[LEFT];
+		this->pressKeysImg.pos.x -= 10;
 		break;
 
 	case Keyboard::KEY_RIGHT:
-		this->_currChosenImage = this->_imageSurfaces[RIGHT];
+		this->pressKeysImg.pos.x += 10;
+		break;
+
+	case Keyboard::KEY_Q:
+		this->pressKeysImg.width -= 10;
+		break;
+
+	case Keyboard::KEY_W:
+		this->pressKeysImg.width += 10;
+		break;
+
+	case Keyboard::KEY_E:
+		this->pressKeysImg.height -= 10;
+		break;
+
+	case Keyboard::KEY_R:
+		this->pressKeysImg.height += 10;
+		break;
+
+	case Keyboard::KEY_T:
+		this->pressKeysImg.opacity -= 10;
+		break;
+
+	case Keyboard::KEY_Y:
+		this->pressKeysImg.opacity += 10;
 		break;
 
 	default:

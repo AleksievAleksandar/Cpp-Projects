@@ -13,6 +13,7 @@
 #include "sdl_utils/MonitorWindow.h"
 #include "sdl_utils/InputEvent.h"
 #include "sdl_utils/Renderer.h"
+#include "sdl_utils/containers/ImageContainer.h"
 
 //Forward Declarations
 struct EngineConfig;
@@ -36,6 +37,7 @@ private:
 	MonitorWindow _window;
 	InputEvent _event;
 	Renderer _renderer;
+	ImageContainer _imageContainer;
 	Game _game;
 };
 

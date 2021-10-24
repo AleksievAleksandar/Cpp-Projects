@@ -22,7 +22,7 @@
 int32_t SDLLoader::init()
 {
     if (EXIT_SUCCESS != TTF_Init())
-    {
+    { 
         std::cerr << "TTF_Init() failed. Reason: " << SDL_GetError() << std::endl;
         return EXIT_FAILURE;
     }

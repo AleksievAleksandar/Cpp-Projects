@@ -10,26 +10,28 @@
 //Thitrd-party includes
 
 //Own includes
-#include "config/GameCfg.h"
+#include "game/config/GameCfg.h"
+#include "utils/drawing/DrawParams.h"
 
 //Forward Declarations
-struct SDL_Texture;
 struct InputEvent;
-
+struct ImageContainer;
 
 class Game
 {
 public:
-	int32_t init(const GameCfg& cfg);
+	int32_t init(const GameCfg& cfg, const ImageContainer* imgContainerInterface);
 	void deInit();
-	void draw(std::vector<SDL_Texture*>& outImages);
+	void draw(std::vector<DrawParams>& outImages);
 	void handleEvent(const InputEvent& event);
 
 private:
-	int32_t loadResources(const std::unordered_map<GameImages, std::string>& resources);
+	DrawParams pressKeysImg;
+	DrawParams pressKeysImg2;
+	DrawParams layer2Img;
 
-	SDL_Texture* _currChosenImage = nullptr;
-	SDL_Texture* _imageSurfaces[COUNT]{};
+	//TODO remove me
+	const ImageContainer* _imageContainer = nullptr;
 };
 
 #endif // !GAME_H

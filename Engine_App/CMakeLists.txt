@@ -4,7 +4,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake_helpers/helpers.cmake)
 
 set(CMAKE_MODULE_PATH
 	${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake_helpers/find_modules)
-
+	
 project(App_Engine LANGUAGES CXX)
 
 #create vars for SDL libs:
@@ -27,10 +27,13 @@ set(_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(
 	${PROJECT_NAME} 
+		${_BASE_DIR}/common/CommonDefines.h
+
 		${_BASE_DIR}/utils/drawing/Point.h
 		${_BASE_DIR}/utils/drawing/Point.cpp
 		${_BASE_DIR}/utils/drawing/Rectangle.h
 		${_BASE_DIR}/utils/drawing/Rectangle.cpp
+		${_BASE_DIR}/utils/drawing/DrawParams.h
 		${_BASE_DIR}/utils/input/EventDefines.h
 		${_BASE_DIR}/utils/thread/ThreadUtils.h
 		${_BASE_DIR}/utils/thread/ThreadUtils.cpp
@@ -52,12 +55,15 @@ add_executable(
 		${_BASE_DIR}/sdl_utils/MonitorWindow.h
 		${_BASE_DIR}/sdl_utils/MonitorWindow.cpp
 		${_BASE_DIR}/sdl_utils/config/MonitorWindowCfg.h
+		${_BASE_DIR}/sdl_utils/config/ImageContainerCfg.h
 		${_BASE_DIR}/sdl_utils/Texture.h
 		${_BASE_DIR}/sdl_utils/Texture.cpp
 		${_BASE_DIR}/sdl_utils/InputEvent.h
 		${_BASE_DIR}/sdl_utils/InputEvent.cpp
 		${_BASE_DIR}/sdl_utils/Renderer.h
 		${_BASE_DIR}/sdl_utils/Renderer.cpp
+		${_BASE_DIR}/sdl_utils/containers/ImageContainer.h
+		${_BASE_DIR}/sdl_utils/containers/ImageContainer.cpp
 
 		${_BASE_DIR}/main.cpp
 )
@@ -84,3 +90,17 @@ target_link_libraries(
 			${SDL2_TTF_LIBRARY}
 			${SDL2_MIXER_LIBRARY}
 )
+
+if(CMAKE_BUILD_TYPE MATCHES Release)
+	target_compile_definitions(
+		${PROJECT_NAME} 
+			PRIVATE 
+				-DRELEASE_BUILD=1) #create own pre-proccessor directive
+
+	add_custom_command(
+		TARGET ${PROJECT_NAME} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_directory
+				${CMAKE_CURRENT_SOURCE_DIR}/resources/
+				$<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/
+	)
+endif()
