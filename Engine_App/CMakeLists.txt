@@ -34,6 +34,8 @@ add_executable(
 		${_BASE_DIR}/utils/drawing/Rectangle.h
 		${_BASE_DIR}/utils/drawing/Rectangle.cpp
 		${_BASE_DIR}/utils/drawing/DrawParams.h
+		${_BASE_DIR}/utils/drawing/Color.h
+		${_BASE_DIR}/utils/drawing/Color.cpp
 		${_BASE_DIR}/utils/input/EventDefines.h
 		${_BASE_DIR}/utils/thread/ThreadUtils.h
 		${_BASE_DIR}/utils/thread/ThreadUtils.cpp
@@ -56,6 +58,7 @@ add_executable(
 		${_BASE_DIR}/sdl_utils/MonitorWindow.cpp
 		${_BASE_DIR}/sdl_utils/config/MonitorWindowCfg.h
 		${_BASE_DIR}/sdl_utils/config/ImageContainerCfg.h
+		${_BASE_DIR}/sdl_utils/config/TextContainerCfg.h
 		${_BASE_DIR}/sdl_utils/Texture.h
 		${_BASE_DIR}/sdl_utils/Texture.cpp
 		${_BASE_DIR}/sdl_utils/InputEvent.h
@@ -64,6 +67,8 @@ add_executable(
 		${_BASE_DIR}/sdl_utils/Renderer.cpp
 		${_BASE_DIR}/sdl_utils/containers/ImageContainer.h
 		${_BASE_DIR}/sdl_utils/containers/ImageContainer.cpp
+		${_BASE_DIR}/sdl_utils/containers/TextContainer.h
+		${_BASE_DIR}/sdl_utils/containers/TextContainer.cpp
 
 		${_BASE_DIR}/main.cpp
 )

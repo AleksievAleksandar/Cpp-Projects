@@ -14,8 +14,8 @@
 
 namespace
 {
-	constexpr auto WINDOW_WIDTH = 640;
-	constexpr auto WINDOW_HEIGHT = 480;
+	constexpr auto WINDOW_WIDTH = 800;
+	constexpr auto WINDOW_HEIGHT = 600;
 	constexpr auto WINDOW_NAME = "App_Engine";
 
 	constexpr auto PRESS_KEYS_WIDTH = 640;
@@ -23,6 +23,8 @@ namespace
 
 	constexpr auto LAYER_2_IMG_WIDTH = 150;
 	constexpr auto LAYER_2_IMG_HEIGHT = 150;
+
+	constexpr auto ANGELINE_VINTAGE_40_FONT_SIZE = 40;
 }
 
 static std::string getFilePath(const std::string& relativePath)
@@ -48,15 +50,23 @@ static void populateGameConfig(GameCfg& outCfg)
 	outCfg.pressKeysRsrcId = TextureId::PRESS_KEYS;
 }
 
+static void populateTextContainerConfig(TextContainerCfg& outCfg)
+{
+	FontCfg fontCfg;
+	fontCfg.location = getFilePath("resources/f/AngelineVintage.ttf");
+	fontCfg.fontSize = ANGELINE_VINTAGE_40_FONT_SIZE;
+	outCfg.fontConfigs.insert(std::make_pair(FontId::ANGELINE_VINTAGE_40, fontCfg));
+}
+
 static void populateImageContainerConfig(ImageContainerCfg& outCfg)
 {
 	ImageCfg imageCfg;
-	imageCfg.location = getFilePath("resources/press_keys.png");
+	imageCfg.location = getFilePath("resources/p/press_keys.png");
 	imageCfg.width = PRESS_KEYS_WIDTH;
 	imageCfg.height = PRESS_KEYS_HEIGHT;
 	outCfg.imageConfigs.insert(std::make_pair(TextureId::PRESS_KEYS, imageCfg));
 
-	imageCfg.location = getFilePath("resources/layer_2.png");
+	imageCfg.location = getFilePath("resources/p/layer_2.png");
 	imageCfg.width = LAYER_2_IMG_WIDTH;
 	imageCfg.height = LAYER_2_IMG_HEIGHT;
 	outCfg.imageConfigs.insert(std::make_pair(TextureId::LAYER_2, imageCfg));
@@ -68,6 +78,7 @@ EngineConfig EngineConfigLoader::loadConfig()
 
 	populateMonitorConfig(cfg.windowCfg);
 	populateImageContainerConfig(cfg.imageContainerCfg);
+	populateTextContainerConfig(cfg.textContainerCfg);
 	populateGameConfig(cfg.gameCfg);
 
 	return cfg;

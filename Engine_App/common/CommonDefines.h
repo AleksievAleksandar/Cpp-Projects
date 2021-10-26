@@ -22,4 +22,12 @@ namespace TextureId
 	};
 } //namespace TextureId
 
+namespace FontId
+{
+	enum FontIdKeys
+	{
+		ANGELINE_VINTAGE_40
+	};
+} //namespace FontId
+
 #endif // !COMMON_DEFINES_H

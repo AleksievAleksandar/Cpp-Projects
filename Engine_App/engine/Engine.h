@@ -14,6 +14,7 @@
 #include "sdl_utils/InputEvent.h"
 #include "sdl_utils/Renderer.h"
 #include "sdl_utils/containers/ImageContainer.h"
+#include "sdl_utils/containers/TextContainer.h"
 
 //Forward Declarations
 struct EngineConfig;
@@ -38,6 +39,7 @@ private:
 	InputEvent _event;
 	Renderer _renderer;
 	ImageContainer _imageContainer;
+	TextContainer _textContainer;
 	Game _game;
 };
 

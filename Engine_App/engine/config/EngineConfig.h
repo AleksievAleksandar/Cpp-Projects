@@ -11,6 +11,7 @@
 //Own includes
 #include "sdl_utils/config/MonitorWindowCfg.h"
 #include "sdl_utils/config/ImageContainerCfg.h"
+#include "sdl_utils/config/TextContainerCfg.h"
 #include "game/config/GameCfg.h"
 
 //Forward Declarations
@@ -20,6 +21,7 @@ struct EngineConfig
 {
 	MonitorWindowCfg windowCfg;
 	ImageContainerCfg imageContainerCfg;
+	TextContainerCfg textContainerCfg;
 	GameCfg gameCfg;
 };
 

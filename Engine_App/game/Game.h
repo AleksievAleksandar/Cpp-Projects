@@ -27,7 +27,6 @@ public:
 
 private:
 	DrawParams pressKeysImg;
-	DrawParams pressKeysImg2;
 	DrawParams layer2Img;
 
 	//TODO remove me

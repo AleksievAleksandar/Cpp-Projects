@@ -14,6 +14,8 @@
 #include "utils/time/Time.h"
 #include "engine/config/EngineConfig.h"
 
+#include "sdl_utils/Texture.h"
+
 
 int32_t Engine::init(const EngineConfig& cfg)
 {
@@ -32,6 +34,12 @@ int32_t Engine::init(const EngineConfig& cfg)
 	if (EXIT_SUCCESS != this->_imageContainer.init(cfg.imageContainerCfg))
 	{
 		std::cerr << "_imageContainer.init() failed." << std::endl;
+		return EXIT_FAILURE;
+	}
+
+	if (EXIT_SUCCESS != this->_textContainer.init(cfg.textContainerCfg))
+	{
+		std::cerr << "_textContainer.init() failed." << std::endl;
 		return EXIT_FAILURE;
 	}
 
@@ -54,6 +62,7 @@ void Engine::deInit()
 {
 	this->_game.deInit();
 	this->_event.deInit();
+	this->_textContainer.deInit();
 	this->_imageContainer.deInit();
 	this->_renderer.deInit();
 	this->_window.deInit();
@@ -131,4 +140,5 @@ void Engine::limitFPS(const int64_t elapsedTimeMicroSeconds) const
 		Threading::sleepFor(sleepDurationMicroSeconds);
 	}
 }
+
 

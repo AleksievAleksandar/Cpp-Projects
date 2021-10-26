@@ -64,20 +64,41 @@ void Renderer::finishFrame()
 	SDL_RenderPresent(this->_sdlRenderer);
 }
 
-void Renderer::renderTexture(SDL_Texture* texture, const DrawParams& drawParam)
+void Renderer::renderTexture(SDL_Texture* texture, const DrawParams& drawParams)
 {
-	const SDL_Rect destRect = { .x = drawParam.pos.x, .y = drawParam.pos.y, .w = drawParam.width, .h = drawParam.height };
-	
+	switch (drawParams.widgetType)
+	{
+	case WidgetType::IMAGE:
+		this->drawImage(drawParams, texture);
+		break;
+
+	case WidgetType::TEXT:
+		this->drawText(drawParams, texture);
+		break;
+
+	default:
+		std::cerr << "ERROR -> received unsupported WidgetType" 
+				  << static_cast<int32_t>(drawParams.widgetType) 
+				  << " for rsrcId: " << drawParams.rsrcId 
+				  << std::endl;
+		break;
+	}
+}
+
+void Renderer::drawImage(const DrawParams& drawParams, SDL_Texture* texture)
+{
+	const SDL_Rect destRect = { .x = drawParams.pos.x, .y = drawParams.pos.y, .w = drawParams.width, .h = drawParams.height };
+
 	int32_t errorCode = EXIT_SUCCESS;
-	if (FULL_OPACITY == drawParam.opacity)
+	if (FULL_OPACITY == drawParams.opacity)
 	{
 		errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
 	}
 	else
 	{
-		if (EXIT_SUCCESS != Texture::setAlphaTexture(texture, drawParam.opacity))
+		if (EXIT_SUCCESS != Texture::setAlphaTexture(texture, drawParams.opacity))
 		{
-			std::cerr << "Texture::setAlphaTexture() failed for rsrcId: " << drawParam.rsrcId << std::endl;
+			std::cerr << "Texture::setAlphaTexture() failed for rsrcId: " << drawParams.rsrcId << std::endl;
 		}
 		errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
 		if (EXIT_SUCCESS != Texture::setAlphaTexture(texture, FULL_OPACITY))
@@ -85,9 +106,26 @@ void Renderer::renderTexture(SDL_Texture* texture, const DrawParams& drawParam)
 			std::cerr << "Texture::setAlphaTexture() failed for rsrcId: " << FULL_OPACITY << std::endl;
 		}
 	}
-	
+
 	if (EXIT_SUCCESS != errorCode)
 	{
-		std::cerr << "SDL_RenderCopy() failed for rsrcId: " << drawParam.rsrcId << ". Reason: " << SDL_GetError() << std::endl;
+		std::cerr << "SDL_RenderCopy() failed for rsrcId: " << drawParams.rsrcId << ". Reason: " << SDL_GetError() << std::endl;
+	}
+}
+
+void Renderer::drawText(const DrawParams& drawParams, SDL_Texture* texture)
+{
+	const SDL_Rect destRect = { .x = drawParams.pos.x, .y = drawParams.pos.y, .w = drawParams.width, .h = drawParams.height };
+
+	//TODO remove me
+	if (EXIT_SUCCESS != Texture::setAlphaTexture(texture, drawParams.opacity))
+	{
+		std::cerr << "Texture::setAlphaTexture() failed for rsrcId: " << drawParams.rsrcId << std::endl;
+	}
+
+	const int32_t errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
+	if (EXIT_SUCCESS != errorCode)
+	{
+		std::cerr << "SDL_RenderCopy() failed for rsrcId: " << drawParams.rsrcId << ". Reason: " << SDL_GetError() << std::endl;
 	}
 }
