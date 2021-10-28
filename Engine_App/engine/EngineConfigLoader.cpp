@@ -24,7 +24,7 @@ namespace
 	constexpr auto LAYER_2_IMG_WIDTH = 150;
 	constexpr auto LAYER_2_IMG_HEIGHT = 150;
 
-	constexpr auto ANGELINE_VINTAGE_40_FONT_SIZE = 40;
+	constexpr auto ANGELINE_VINTAGE_40_FONT_SIZE = 80;
 }
 
 static std::string getFilePath(const std::string& relativePath)
@@ -48,6 +48,8 @@ static void populateGameConfig(GameCfg& outCfg)
 {
 	outCfg.layer2RsrcId = TextureId::LAYER_2;
 	outCfg.pressKeysRsrcId = TextureId::PRESS_KEYS;
+
+	outCfg.textFontId = FontId::ANGELINE_VINTAGE_40;
 }
 
 static void populateTextContainerConfig(TextContainerCfg& outCfg)

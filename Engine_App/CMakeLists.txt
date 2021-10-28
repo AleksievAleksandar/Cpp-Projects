@@ -29,19 +29,6 @@ add_executable(
 	${PROJECT_NAME} 
 		${_BASE_DIR}/common/CommonDefines.h
 
-		${_BASE_DIR}/utils/drawing/Point.h
-		${_BASE_DIR}/utils/drawing/Point.cpp
-		${_BASE_DIR}/utils/drawing/Rectangle.h
-		${_BASE_DIR}/utils/drawing/Rectangle.cpp
-		${_BASE_DIR}/utils/drawing/DrawParams.h
-		${_BASE_DIR}/utils/drawing/Color.h
-		${_BASE_DIR}/utils/drawing/Color.cpp
-		${_BASE_DIR}/utils/input/EventDefines.h
-		${_BASE_DIR}/utils/thread/ThreadUtils.h
-		${_BASE_DIR}/utils/thread/ThreadUtils.cpp
-		${_BASE_DIR}/utils/time/Time.h
-		${_BASE_DIR}/utils/time/Time.cpp
-
 		${_BASE_DIR}/engine/Engine.h
 		${_BASE_DIR}/engine/Engine.cpp
 		${_BASE_DIR}/engine/EngineConfigLoader.h
@@ -52,48 +39,22 @@ add_executable(
 		${_BASE_DIR}/game/Game.cpp
 		${_BASE_DIR}/game/config/GameCfg.h
 
-		${_BASE_DIR}/sdl_utils/SDLLoader.h
-		${_BASE_DIR}/sdl_utils/SDLLoader.cpp
-		${_BASE_DIR}/sdl_utils/MonitorWindow.h
-		${_BASE_DIR}/sdl_utils/MonitorWindow.cpp
-		${_BASE_DIR}/sdl_utils/config/MonitorWindowCfg.h
-		${_BASE_DIR}/sdl_utils/config/ImageContainerCfg.h
-		${_BASE_DIR}/sdl_utils/config/TextContainerCfg.h
-		${_BASE_DIR}/sdl_utils/Texture.h
-		${_BASE_DIR}/sdl_utils/Texture.cpp
-		${_BASE_DIR}/sdl_utils/InputEvent.h
-		${_BASE_DIR}/sdl_utils/InputEvent.cpp
-		${_BASE_DIR}/sdl_utils/Renderer.h
-		${_BASE_DIR}/sdl_utils/Renderer.cpp
-		${_BASE_DIR}/sdl_utils/containers/ImageContainer.h
-		${_BASE_DIR}/sdl_utils/containers/ImageContainer.cpp
-		${_BASE_DIR}/sdl_utils/containers/TextContainer.h
-		${_BASE_DIR}/sdl_utils/containers/TextContainer.cpp
-
 		${_BASE_DIR}/main.cpp
 )
 
 set_target_cpp_standard(${PROJECT_NAME} 17)
-
 enable_target_warnings(${PROJECT_NAME})
 
 target_include_directories(
 	${PROJECT_NAME}
 		PRIVATE
 			${_BASE_DIR}
-			${SDL2_INCLUDE_DIR}
-			${SDL2_IMAGE_INCLUDE_DIR}
-			${SDL2_TTF_INCLUDE_DIR}
-			${SDL2_MIXER_INCLUDE_DIR}
 )
 
 target_link_libraries(
 	${PROJECT_NAME}
 		PRIVATE
-			${SDL2_LIBRARY}
-			${SDL2_IMAGE_LIBRARY}
-			${SDL2_TTF_LIBRARY}
-			${SDL2_MIXER_LIBRARY}
+			sdl_utils
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Release)
@@ -109,3 +70,6 @@ if(CMAKE_BUILD_TYPE MATCHES Release)
 				$<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/
 	)
 endif()
+
+add_subdirectory(utils)
+add_subdirectory(sdl_utils)

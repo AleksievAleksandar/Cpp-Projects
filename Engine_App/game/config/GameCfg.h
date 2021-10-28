@@ -19,6 +19,8 @@ struct GameCfg
 {
 	int32_t pressKeysRsrcId;
 	int32_t layer2RsrcId;
+
+	int32_t textFontId;
 };
 
 #endif // !CAME_CONFIG_H
