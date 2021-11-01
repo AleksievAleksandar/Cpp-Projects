@@ -1,3 +1,5 @@
+#include "..\..\include\utils\drawing\Color.h"
+#include "..\..\include\utils\drawing\Color.h"
 //Coresponding header
 #include "utils/drawing/Color.h"
 
@@ -31,4 +33,17 @@ Color::Color(const uint8_t red, const uint8_t green, const uint8_t blue, const u
 	this->rgba.g = green;
 	this->rgba.b = blue;
 	this->rgba.a = alpha;
+}
+
+bool Color::operator==(const Color& other) const
+{
+	return (this->rgba.a == other.rgba.a) &&
+		   (this->rgba.b == other.rgba.b) &&
+		   (this->rgba.g == other.rgba.g) &&
+		   (this->rgba.r == other.rgba.r);
+}
+
+bool Color::operator!=(const Color& other) const
+{
+	return !(*this == other);
 }

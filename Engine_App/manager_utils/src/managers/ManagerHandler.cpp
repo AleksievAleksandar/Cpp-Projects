@@ -50,13 +50,6 @@ int32_t ManagerHandler::init(const ManagerHandlerCfg& cfg)
 
 void ManagerHandler::deInit()
 {
-	gRsrcMgr->deInit();
-	delete gRsrcMgr;
-	gRsrcMgr = nullptr;
-
-	gDrawMgr->deInit();
-	delete gDrawMgr;
-	gDrawMgr = nullptr;
 	for (int32_t i = MANAGERS_COUNT - 1; i >= 0; --i)
 	{
 		this->_managers[i]->deInit();

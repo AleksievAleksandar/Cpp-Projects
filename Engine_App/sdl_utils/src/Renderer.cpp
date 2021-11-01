@@ -104,7 +104,12 @@ void Renderer::setWidgetOpacity(SDL_Texture* texture, int32_t opacity)
 
 void Renderer::drawImage(const DrawParams& drawParams, SDL_Texture* texture)
 {
-	const SDL_Rect destRect = { .x = drawParams.pos.x, .y = drawParams.pos.y, .w = drawParams.width, .h = drawParams.height };
+	SDL_Rect destRect;
+	destRect.x = drawParams.pos.x;
+	destRect.y = drawParams.pos.y;
+	destRect.w = drawParams.width;
+	destRect.h = drawParams.height;
+
 
 	int32_t errorCode = EXIT_SUCCESS;
 	if (FULL_OPACITY == drawParams.opacity)
@@ -132,7 +137,11 @@ void Renderer::drawImage(const DrawParams& drawParams, SDL_Texture* texture)
 
 void Renderer::drawText(const DrawParams& drawParams, SDL_Texture* texture)
 {
-	const SDL_Rect destRect = { .x = drawParams.pos.x, .y = drawParams.pos.y, .w = drawParams.width, .h = drawParams.height };
+	SDL_Rect destRect; 
+	destRect.x = drawParams.pos.x;
+	destRect.y = drawParams.pos.y;
+	destRect.w = drawParams.width; 
+	destRect.h = drawParams.height;
 
 	const int32_t errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
 	if (EXIT_SUCCESS != errorCode)

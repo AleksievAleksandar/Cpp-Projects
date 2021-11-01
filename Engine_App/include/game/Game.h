@@ -10,7 +10,8 @@
 
 //Own includes
 #include "game/config/GameCfg.h"
-#include "utils/drawing/DrawParams.h"
+#include "manager_utils/drawing/Image.h"
+#include "manager_utils/drawing/Text.h"
 
 //Forward Declarations
 struct InputEvent;
@@ -24,14 +25,8 @@ public:
 	void handleEvent(const InputEvent& event);
 
 private:
-	DrawParams pressKeysImg;
-	DrawParams layer2Img;
-
-	DrawParams helloText;
-	DrawParams pressText;
-	DrawParams hideText;
-
-	bool isPressTextHidden = false;
+	void setMousePosText(const Point& mousePos);
+	Text _mousePosText;
 };
 
 #endif // !GAME_H

@@ -19,6 +19,7 @@ add_library(
 
 		${_SRC_DIR}/drawing/Point.cpp
 		${_SRC_DIR}/drawing/Rectangle.cpp
+		${_SRC_DIR}/drawing/DrawParams.cpp
 		${_SRC_DIR}/drawing/Color.cpp
 		${_SRC_DIR}/thread/ThreadUtils.cpp
 		${_SRC_DIR}/time/Time.cpp

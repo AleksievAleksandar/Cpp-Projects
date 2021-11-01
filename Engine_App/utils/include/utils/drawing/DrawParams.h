@@ -34,6 +34,7 @@ enum class WidgetType : uint8_t
 
 struct DrawParams 
 {
+	void reset();
 	//Top left position of texture
 	Point pos = Point::UNDEFINED;
 
