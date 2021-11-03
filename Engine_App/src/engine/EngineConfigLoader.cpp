@@ -11,6 +11,7 @@
 
 //Own includes
 #include "common/CommonDefines.h"
+#include "sdl_utils/containers/ImageContainer.h"
 
 namespace
 {
@@ -18,11 +19,11 @@ namespace
 	constexpr auto WINDOW_HEIGHT = 600;
 	constexpr auto WINDOW_NAME = "App_Engine";
 
-	constexpr auto PRESS_KEYS_WIDTH = 640;
-	constexpr auto PRESS_KEYS_HEIGHT = 480;
+	constexpr auto RUNNING_GIRL_FRAMES = 6;
+	constexpr auto RUNNING_GIRL_IMG_WIDTH = 256;
+	constexpr auto RUNNING_GIRL_IMG_HEIGHT = 220;
 
-	constexpr auto LAYER_2_IMG_WIDTH = 150;
-	constexpr auto LAYER_2_IMG_HEIGHT = 150;
+	constexpr auto WHEEL_IMG_WIDTH_HEIGHT = 695;
 
 	constexpr auto ANGELINE_VINTAGE_40_FONT_SIZE = 80;
 	constexpr auto MAX_FRAMERATE = 30;
@@ -48,15 +49,26 @@ static void populateTextContainerConfig(TextContainerCfg& outCfg)
 static void populateImageContainerConfig(ImageContainerCfg& outCfg)
 {
 	ImageCfg imageCfg;
-	imageCfg.location = getFilePath("resources/p/press_keys.png");
-	imageCfg.width = PRESS_KEYS_WIDTH;
-	imageCfg.height = PRESS_KEYS_HEIGHT;
-	outCfg.imageConfigs.insert(std::make_pair(TextureId::PRESS_KEYS, imageCfg));
+	imageCfg.location = getFilePath("resources/p/sprites/running_girl_small.png");
+	for (auto i = 0; i < RUNNING_GIRL_FRAMES; ++i)
+	{
+		imageCfg.frames.emplace_back(
+									i * RUNNING_GIRL_IMG_WIDTH, //x
+									0,							//y
+									RUNNING_GIRL_IMG_WIDTH,		//w
+									RUNNING_GIRL_IMG_HEIGHT);	//h
+	}
+	outCfg.imageConfigs.emplace(TextureId::RUNNING_GIRL, imageCfg);
+	imageCfg.frames.clear();
 
-	imageCfg.location = getFilePath("resources/p/layer_2.png");
-	imageCfg.width = LAYER_2_IMG_WIDTH;
-	imageCfg.height = LAYER_2_IMG_HEIGHT;
-	outCfg.imageConfigs.insert(std::make_pair(TextureId::LAYER_2, imageCfg));
+	imageCfg.location = getFilePath("resources/p/wheel.png");
+	imageCfg.frames.emplace_back(
+		0,							//x
+		0,							//y
+		WHEEL_IMG_WIDTH_HEIGHT,		//w
+		WHEEL_IMG_WIDTH_HEIGHT);	//h
+	outCfg.imageConfigs.emplace(TextureId::WHEEL, imageCfg);
+	imageCfg.frames.clear();
 }
 
 static void populateMonitorConfig(MonitorWindowCfg& outCfg)
@@ -87,8 +99,8 @@ static void populateManagerHandlerCfg(ManagerHandlerCfg& outCfg)
 
 static void populateGameConfig(GameCfg& outCfg)
 {
-	outCfg.layer2RsrcId = TextureId::LAYER_2;
-	outCfg.pressKeysRsrcId = TextureId::PRESS_KEYS;
+	outCfg.runningGirlRsrcId = TextureId::RUNNING_GIRL;
+	outCfg.wheelRsrcId = TextureId::WHEEL;
 
 	outCfg.textFontId = FontId::ANGELINE_VINTAGE_40;
 }

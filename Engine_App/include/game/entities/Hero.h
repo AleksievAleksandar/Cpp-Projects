@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef HERO_H
+#define HERO_H
 
 //C system includes
 
@@ -9,26 +9,22 @@
 //Thitrd-party includes
 
 //Own includes
-#include "game/config/GameCfg.h"
-#include "entities/Hero.h"
 #include "manager_utils/drawing/Image.h"
-#include "manager_utils/drawing/Text.h"
 
 //Forward Declarations
 struct InputEvent;
 
-class Game
+
+class Hero
 {
 public:
-	int32_t init(const GameCfg& cfg);
+	int32_t init(const int32_t heroRsrcId);
 	void deInit();
 	void draw();
 	void handleEvent(const InputEvent& event);
 
 private:
-	void setMousePosText(const Point& mousePos);
-	Hero _hero;
-	Text _mousePosText;
+	Image _heroImg;
 };
 
-#endif // !GAME_H
+#endif // !HERO_H

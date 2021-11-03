@@ -20,6 +20,7 @@ public:
 	void draw();
 	void reset();
 
+	void setFlipType(const WidgetFlip& flipType);
 	void setWidth(const int32_t width);
 	void setHeight(const int32_t height);
 

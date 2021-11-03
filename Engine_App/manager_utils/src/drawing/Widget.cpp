@@ -29,6 +29,11 @@ void Widget::reset()
 	this->_drawParams.reset();
 }
 
+void Widget::setFlipType(const WidgetFlip& flipType)
+{
+	this->_drawParams.flipType = flipType;
+}
+
 void Widget::setWidth(const int32_t width)
 {
 	this->_drawParams.width = width;

@@ -17,8 +17,8 @@
 
 struct GameCfg
 {
-	int32_t pressKeysRsrcId;
-	int32_t layer2RsrcId;
+	int32_t runningGirlRsrcId;
+	int32_t wheelRsrcId;
 
 	int32_t textFontId;
 };

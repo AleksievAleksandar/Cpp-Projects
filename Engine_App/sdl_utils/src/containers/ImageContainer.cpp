@@ -14,6 +14,7 @@
 
 //Forward Declarations
 
+static const Frames EMPTY_FRAMES { Rectangle::ZERO };
 
 int32_t ImageContainer::init(const ImageContainerCfg& imageContCfg)
 {
@@ -47,13 +48,13 @@ SDL_Texture* ImageContainer::getImageTexture(int32_t rsrcId) const
 	return it->second;
 }
 
-Rectangle ImageContainer::getImageFrame(int32_t rsrcId) const
+const Frames& ImageContainer::getImageFrame(int32_t rsrcId) const
 {
 	auto it = this->_textureFrames.find(rsrcId);
 	if (it == this->_textureFrames.end())
 	{
 		std::cerr << "ERROR. Invalid rsrcId: " << rsrcId << " requested. Returning ZERO rectangle." << std::endl;
-		return Rectangle::ZERO;
+		return EMPTY_FRAMES;
 	}
 	return it->second;
 }
@@ -70,11 +71,7 @@ int32_t ImageContainer::loadSingleResource(const ImageCfg& resCfg, const int32_t
 
 	this->_textures[rsrcId] = texture;
 
-	Rectangle& rec = this->_textureFrames[rsrcId];
-	rec.x = 0;
-	rec.y = 0;
-	rec.w = resCfg.width;
-	rec.h = resCfg.height;
+	this->_textureFrames[rsrcId] = resCfg.frames;
 
 	return EXIT_SUCCESS;
 }

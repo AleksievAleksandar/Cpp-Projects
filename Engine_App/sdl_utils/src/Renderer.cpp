@@ -104,17 +104,9 @@ void Renderer::setWidgetOpacity(SDL_Texture* texture, int32_t opacity)
 
 void Renderer::drawImage(const DrawParams& drawParams, SDL_Texture* texture)
 {
-	SDL_Rect destRect;
-	destRect.x = drawParams.pos.x;
-	destRect.y = drawParams.pos.y;
-	destRect.w = drawParams.width;
-	destRect.h = drawParams.height;
-
-
-	int32_t errorCode = EXIT_SUCCESS;
 	if (FULL_OPACITY == drawParams.opacity)
 	{
-		errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
+		this->drawTextureInternal(drawParams, texture);
 	}
 	else
 	{
@@ -122,28 +114,32 @@ void Renderer::drawImage(const DrawParams& drawParams, SDL_Texture* texture)
 		{
 			std::cerr << "Texture::setAlphaTexture() failed for rsrcId: " << drawParams.rsrcId << std::endl;
 		}
-		errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
+
+		this->drawTextureInternal(drawParams, texture);
+
 		if (EXIT_SUCCESS != Texture::setAlphaTexture(texture, FULL_OPACITY))
 		{
 			std::cerr << "Texture::setAlphaTexture() failed for rsrcId: " << FULL_OPACITY << std::endl;
 		}
 	}
-
-	if (EXIT_SUCCESS != errorCode)
-	{
-		std::cerr << "SDL_RenderCopy() failed for rsrcId: " << drawParams.rsrcId << ". Reason: " << SDL_GetError() << std::endl;
-	}
 }
 
 void Renderer::drawText(const DrawParams& drawParams, SDL_Texture* texture)
 {
-	SDL_Rect destRect; 
+	this->drawTextureInternal(drawParams, texture);
+}
+
+void Renderer::drawTextureInternal(const DrawParams& drawParams, SDL_Texture* texture)
+{
+	SDL_Rect destRect;
 	destRect.x = drawParams.pos.x;
 	destRect.y = drawParams.pos.y;
-	destRect.w = drawParams.width; 
+	destRect.w = drawParams.width;
 	destRect.h = drawParams.height;
 
-	const int32_t errorCode = SDL_RenderCopy(this->_sdlRenderer, texture, nullptr, &destRect);
+	const SDL_Rect* sourceRect = reinterpret_cast<const SDL_Rect*>(&drawParams.frameRect);
+
+	const int32_t errorCode = SDL_RenderCopyEx(this->_sdlRenderer, texture, sourceRect, &destRect, 0.0, nullptr, static_cast<SDL_RendererFlip>(drawParams.flipType));
 	if (EXIT_SUCCESS != errorCode)
 	{
 		std::cerr << "SDL_RenderCopy() failed for rsrcId: " << drawParams.rsrcId << ". Reason: " << SDL_GetError() << std::endl;

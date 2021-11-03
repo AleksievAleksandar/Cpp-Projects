@@ -29,6 +29,12 @@ void Text::create(const std::string& text, int32_t fontId, const Color& color, c
 	}
 
 	gRsrcMgr->createText(text, color, fontId, this->_drawParams.textId, this->_drawParams.width, this->_drawParams.height);
+
+	this->_drawParams.frameRect.x = 0;
+	this->_drawParams.frameRect.y = 0;
+	this->_drawParams.frameRect.w = this->_drawParams.width;
+	this->_drawParams.frameRect.h = this->_drawParams.height;
+
 	this->_drawParams.pos = pos;
 	this->_drawParams.widgetType = WidgetType::TEXT;
 
@@ -60,6 +66,9 @@ void Text::setText(const std::string& text)
 		this->_textContent = text;
 		gRsrcMgr->reloadText(text, this->_color, this->_fontId,
 			this->_drawParams.textId, this->_drawParams.width, this->_drawParams.height);
+
+		this->_drawParams.frameRect.w = this->_drawParams.width;
+		this->_drawParams.frameRect.h = this->_drawParams.height;
 	}
 }
 
@@ -70,6 +79,9 @@ void Text::setColor(const Color& color)
 		this->_color = color;
 		gRsrcMgr->reloadText(this->_textContent, this->_color, this->_fontId,
 			this->_drawParams.textId, this->_drawParams.width, this->_drawParams.height);
+
+		this->_drawParams.frameRect.w = this->_drawParams.width;
+		this->_drawParams.frameRect.h = this->_drawParams.height;
 	}
 }
 
