@@ -21,18 +21,27 @@ public:
 	void reset();
 
 	void setFlipType(const WidgetFlip& flipType);
-	void setWidth(const int32_t width);
-	void setHeight(const int32_t height);
 
+	void setWidth(const int32_t width);
 	int32_t getWidth() const;
+
+	void setRotationCenter(const Point& rotCenter);
+
+	void setHeight(const int32_t height);
 	int32_t getHeight() const;
 
 	void setPossition(const Point& pos);
 	void setPossition(const int32_t x, const int32_t y);
-	void setOpacity(int32_t opacity);
-
-	int32_t getOpacity() const;
 	Point getPosition() const;
+
+	void setOpacity(int32_t opacity);
+	int32_t getOpacity() const;
+
+	void setRotation(const double angle);
+	double getRotation() const;
+
+	void rotateRight(double delta);
+	void rotateLeft(double delta);
 
 	void activateAlphaModulation();
 	void deactivateAlphaModulation();

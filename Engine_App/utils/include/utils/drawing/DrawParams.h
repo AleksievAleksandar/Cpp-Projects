@@ -51,6 +51,9 @@ struct DrawParams
 	//Top left position of texture
 	Point pos = Point::UNDEFINED;
 
+	double rotationAngle = 0.0;
+	Point rotationCenter = Point::ZERO;
+
 	//Draw dimensions of the texture
 	int32_t width = 0;
 	int32_t height = 0;

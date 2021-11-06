@@ -20,6 +20,12 @@ int32_t Game::init(const GameCfg& cfg)
 		return EXIT_FAILURE;
 	}
 
+	if (EXIT_SUCCESS != this->_wheel.init(cfg.wheelRsrcId))
+	{
+		std::cerr << "ERROR -> _wheel.init() failed() for RsrcId: " << cfg.wheelRsrcId << std::endl;
+		return EXIT_FAILURE;
+	}
+
 	this->_mousePosText.create("_", cfg.textFontId, Colors::RED);
 	this->_mousePosText.hide();
 
@@ -33,6 +39,7 @@ void Game::deInit()
 
 void Game::draw()
 {
+	this->_wheel.draw();
 	this->_hero.draw();
 	this->_mousePosText.draw();
 }
@@ -40,10 +47,14 @@ void Game::draw()
 void Game::handleEvent(const InputEvent& event)
 {
 	this->_hero.handleEvent(event);
+	this->_wheel.handleEvent(event);
 
-	if (event.type != TouchEvent::TOUCH_RELEASE)
+	if (event.type == TouchEvent::KEYBOARD_PRESS)
 	{
-		return;
+		if (event.key == Keyboard::KEY_A)
+		{
+			this->_mousePosText.rotateRight(30);
+		}
 	}
 
 	this->setMousePosText(event.pos);

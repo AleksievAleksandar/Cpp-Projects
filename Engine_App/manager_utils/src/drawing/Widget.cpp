@@ -59,6 +59,11 @@ void Widget::setPossition(const Point& pos)
 	this->_drawParams.pos = pos;
 }
 
+void Widget::setRotationCenter(const Point& rotCenter)
+{
+	this->_drawParams.rotationCenter = rotCenter;
+}
+
 void Widget::setPossition(const int32_t x, const int32_t y)
 {
 	this->_drawParams.pos.x = x;
@@ -85,6 +90,26 @@ int32_t Widget::getOpacity() const
 Point Widget::getPosition() const
 {
 	return this->_drawParams.pos;
+}
+
+void Widget::setRotation(const double angle)
+{
+	this->_drawParams.rotationAngle = angle;
+}
+
+double Widget::getRotation() const
+{
+	return this->_drawParams.rotationAngle;
+}
+
+void Widget::rotateRight(double delta)
+{
+	this->_drawParams.rotationAngle += delta;
+}
+
+void Widget::rotateLeft(double delta)
+{
+	this->_drawParams.rotationAngle -= delta;
 }
 
 void Widget::activateAlphaModulation()

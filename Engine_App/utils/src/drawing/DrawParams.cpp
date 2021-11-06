@@ -14,6 +14,7 @@ void DrawParams::reset()
 {
 	this->frameRect = Rectangle::ZERO;
 	this->pos = Point::UNDEFINED;
+	this->rotationAngle = 0.0;
 	this->width = 0;
 	this->height = 0;
 	this->opacity = FULL_OPACITY;

@@ -138,8 +138,10 @@ void Renderer::drawTextureInternal(const DrawParams& drawParams, SDL_Texture* te
 	destRect.h = drawParams.height;
 
 	const SDL_Rect* sourceRect = reinterpret_cast<const SDL_Rect*>(&drawParams.frameRect);
+	const SDL_Point* rotationCenter = reinterpret_cast<const SDL_Point*>(&drawParams.rotationCenter);
 
-	const int32_t errorCode = SDL_RenderCopyEx(this->_sdlRenderer, texture, sourceRect, &destRect, 0.0, nullptr, static_cast<SDL_RendererFlip>(drawParams.flipType));
+	const int32_t errorCode = SDL_RenderCopyEx(this->_sdlRenderer, texture, sourceRect, &destRect, drawParams.rotationAngle, 
+												rotationCenter, static_cast<SDL_RendererFlip>(drawParams.flipType));
 	if (EXIT_SUCCESS != errorCode)
 	{
 		std::cerr << "SDL_RenderCopy() failed for rsrcId: " << drawParams.rsrcId << ". Reason: " << SDL_GetError() << std::endl;

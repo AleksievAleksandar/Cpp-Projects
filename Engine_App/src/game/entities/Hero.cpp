@@ -43,7 +43,7 @@ void Hero::handleEvent(const InputEvent& event)
 
 	case Keyboard::KEY_LEFT:
 		this->_heroImg.setFlipType(WidgetFlip::HORIZONTAL);
-		this->_heroImg.setPrevFrame();
+		this->_heroImg.setNextFrame();
 		this->_heroImg.moveLeft(8);
 		break;
 

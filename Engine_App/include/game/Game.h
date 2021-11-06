@@ -11,6 +11,7 @@
 //Own includes
 #include "game/config/GameCfg.h"
 #include "entities/Hero.h"
+#include "entities/Wheel.h"
 #include "manager_utils/drawing/Image.h"
 #include "manager_utils/drawing/Text.h"
 
@@ -28,6 +29,7 @@ public:
 private:
 	void setMousePosText(const Point& mousePos);
 	Hero _hero;
+	Wheel _wheel;
 	Text _mousePosText;
 };
 

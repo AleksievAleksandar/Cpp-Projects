@@ -15,8 +15,8 @@
 
 namespace
 {
-	constexpr auto WINDOW_WIDTH = 800;
-	constexpr auto WINDOW_HEIGHT = 600;
+	constexpr auto WINDOW_WIDTH = 1024;
+	constexpr auto WINDOW_HEIGHT = 800;
 	constexpr auto WINDOW_NAME = "App_Engine";
 
 	constexpr auto RUNNING_GIRL_FRAMES = 6;
