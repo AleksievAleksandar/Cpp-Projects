@@ -14,6 +14,7 @@
 #include "utils/time/Time.h"
 #include "engine/config/EngineConfig.h"
 #include "manager_utils/managers/DrawMgr.h"
+#include "manager_utils/managers/TimerMgr.h"
 #include "sdl_utils/Texture.h"
 
 
@@ -36,6 +37,8 @@ int32_t Engine::init(const EngineConfig& cfg)
 		std::cerr << "_game.init() failed." << std::endl;
 		return EXIT_FAILURE;
 	}
+
+	gTimerMgr->onInitEnd();
 
 	return EXIT_SUCCESS;
 }
@@ -79,7 +82,6 @@ void Engine::drawFrame()
 bool Engine::processFrame()
 {
 	this->_managerHandler.process();
-	this->_game.process();
 
 	while (this->_event.pollEvent())
 	{

@@ -26,7 +26,6 @@ public:
 	void deInit();
 	void draw();
 	void handleEvent(const InputEvent& event);
-	void process();
 
 private:
 	void onButtonPressed(int32_t buttonId) override;

@@ -73,7 +73,7 @@ bool TimerMgr::isActiveTimerId(int32_t timerId) const
 
 void TimerMgr::onInitEnd()
 {
-
+    this->_elapsedTime.getElapsed();
 }
 
 void TimerMgr::removeTimersInternal() 

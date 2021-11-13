@@ -11,9 +11,11 @@
 //Own includes
 #include "sdl_utils/InputEvent.h"
 
-int32_t Hero::init(const int32_t heroRsrcId)
+int32_t Hero::init(const int32_t heroRsrcId, int32_t moveTimerId)
 {
 	this->_heroImg.create(heroRsrcId);
+	this->_moveTimerId = moveTimerId;
+
 	return EXIT_SUCCESS;
 }
 
@@ -59,5 +61,35 @@ void Hero::handleEvent(const InputEvent& event)
 
 	default:
 		break;
+	}
+}
+
+void Hero::startMoveAnim()
+{
+	this->startTimer(50, this->_moveTimerId, TimerType::PULSE);
+}
+
+void Hero::processMoveAnim()
+{
+	--this->_moveSteps;
+	this->_heroImg.moveRight(5);
+	this->_heroImg.setNextFrame();
+
+	if (this->_moveSteps == 0)
+	{
+		this->stopTimer(this->_moveTimerId);
+		this->_moveSteps = 50;
+	}
+}
+
+void Hero::onTimeout(int32_t timerId)
+{
+	if (this->_moveTimerId == timerId)
+	{
+		this->processMoveAnim();
+	}
+	else
+	{
+		std::cerr << "ERROR -> Received unsupported timerId: " << timerId << std::endl;
 	}
 }

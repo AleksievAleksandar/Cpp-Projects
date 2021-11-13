@@ -12,14 +12,27 @@
 #include "sdl_utils/InputEvent.h"
 
 
-int32_t Wheel::init(const int32_t wheelRsrcId)
+Wheel::~Wheel()
+{
+	if (this->isActiveTimerId(this->_rotAnimTimerId))
+	{
+		this->stopTimer(this->_rotAnimTimerId);
+		this->stopTimer(this->_scaleAnimTimerId);
+	}
+}
+
+int32_t Wheel::init(const int32_t wheelRsrcId, int32_t rotAnimTimerId, int32_t scaleAnimTimerId)
 {
 	this->_wheelImg.create(wheelRsrcId);
+
 
 	Point rotCenter(this->_wheelImg.getWidth(), this->_wheelImg.getHeight());
 	rotCenter.x /= 2;
 	rotCenter.y /= 2;
 	this->_wheelImg.setRotationCenter(rotCenter);
+
+	this->_rotAnimTimerId = rotAnimTimerId;
+	this->_scaleAnimTimerId = scaleAnimTimerId;
 
 	return EXIT_SUCCESS;
 }
@@ -72,7 +85,9 @@ void Wheel::startAnim()
 		return;
 	}
 	this->_isAnimActiv = true;
-	std::cout << "Wheel anim started." << std::endl;
+
+	this->startTimer(20, this->_rotAnimTimerId, TimerType::PULSE);
+	this->startTimer(100, this->_scaleAnimTimerId, TimerType::PULSE);
 }
 
 void Wheel::stopAnim()
@@ -83,14 +98,50 @@ void Wheel::stopAnim()
 		return;
 	}
 	this->_isAnimActiv = false;
-	std::cout << "Wheel anim stoped." << std::endl;
+	this->stopTimer(this->_rotAnimTimerId);
+	this->stopTimer(this->_scaleAnimTimerId);
 }
 
-void Wheel::process()
+void Wheel::processRotAnim()
 {
-	if (!this->_isAnimActiv)
-	{
-		return;
-	}
 	this->_wheelImg.rotateRight(2);
+}
+
+void Wheel::processScaleAnim()
+{
+	//this->_wheelImg.rotateRight(2);
+	--this->_scaleSteps;
+
+	if (0 == this->_scaleSteps)
+	{
+		this->_isShrinking = !this->_isShrinking;
+		this->_scaleSteps = 50;
+	}
+
+	if (this->_isShrinking)
+	{
+		this->_wheelImg.setWidth(this->_wheelImg.getWidth() - 5);
+		this->_wheelImg.setHeight(this->_wheelImg.getHeight() - 5);
+	}
+	else
+	{
+		this->_wheelImg.setWidth(this->_wheelImg.getWidth() + 5);
+		this->_wheelImg.setHeight(this->_wheelImg.getHeight() + 5);
+	}
+}
+
+void Wheel::onTimeout(int32_t timerId)
+{
+	if (timerId == this->_rotAnimTimerId)
+	{
+		this->processRotAnim();
+	}
+	else if (timerId == this->_scaleAnimTimerId)
+	{
+		this->processScaleAnim();
+	}
+	else
+	{
+		std::cerr << "ERROR -> Received unsupported timerId: " << timerId << std::endl;
+	}
 }

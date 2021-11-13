@@ -33,4 +33,15 @@ namespace FontId
 	};
 } //namespace FontId
 
+namespace TimerId
+{
+	enum Keys
+	{
+		WHEEL_ROT_ANIM_ID,
+		SCALE_WHEEL_TIMER_ID,
+		MOVE_GIRL_TIMER_ID
+	};
+} //namespace TimerId
+
+
 #endif // !COMMON_DEFINES_H

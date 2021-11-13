@@ -143,6 +143,10 @@ static void populateGameConfig(GameCfg& outCfg)
 	outCfg.stopButtonRsrcId = TextureId::STOP_BUTTON;
 
 	outCfg.textFontId = FontId::ANGELINE_VINTAGE_40;
+
+	outCfg.wheelRotAminTimerId = TimerId::WHEEL_ROT_ANIM_ID;
+	outCfg.moveGirlTimerId = TimerId::MOVE_GIRL_TIMER_ID;
+	outCfg.wheelScaleAnimTimerId = TimerId::SCALE_WHEEL_TIMER_ID;
 }
 
 EngineConfig EngineConfigLoader::loadConfig()

@@ -14,13 +14,13 @@
 
 int32_t Game::init(const GameCfg& cfg)
 {
-	if (EXIT_SUCCESS != this->_hero.init(cfg.runningGirlRsrcId))
+	if (EXIT_SUCCESS != this->_hero.init(cfg.runningGirlRsrcId, cfg.moveGirlTimerId))
 	{
 		std::cerr << "ERROR -> _hero.init() failed() for RsrcId: " << cfg.runningGirlRsrcId << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	if (EXIT_SUCCESS != this->_wheel.init(cfg.wheelRsrcId))
+	if (EXIT_SUCCESS != this->_wheel.init(cfg.wheelRsrcId, cfg.wheelRotAminTimerId, cfg.wheelScaleAnimTimerId))
 	{
 		std::cerr << "ERROR -> _wheel.init() failed() for RsrcId: " << cfg.wheelRsrcId << std::endl;
 		return EXIT_FAILURE;
@@ -98,11 +98,6 @@ void Game::handleEvent(const InputEvent& event)
 	}
 }
 
-void Game::process()
-{
-	this->_wheel.process();
-}
-
 void Game::onButtonPressed(int32_t buttonId)
 {
 	switch (buttonId)
@@ -111,6 +106,7 @@ void Game::onButtonPressed(int32_t buttonId)
 		this->_wheelBtns[WHEEL_START_BTN_IDX].lockInput();
 		this->_wheelBtns[WHEEL_STOP_BTN_IDX].unlockInput();
 		this->_wheel.startAnim();
+		this->_hero.startMoveAnim();
 		break;
 
 	case WHEEL_STOP_BTN_IDX:
