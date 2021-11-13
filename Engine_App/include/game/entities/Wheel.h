@@ -22,7 +22,13 @@ public:
 	void draw();
 	void handleEvent(const InputEvent& event);
 
+	void startAnim();
+	void stopAnim();
+
+	void process();
+
 private:
+	bool _isAnimActiv = false;
 	Image _wheelImg;
 };
 

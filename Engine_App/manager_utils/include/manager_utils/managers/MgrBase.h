@@ -15,6 +15,8 @@ enum
 {
 	DRAW_MGR_IDX,
 	RSRC_MGR_IDX,
+	TIMER_MGR_IDX,
+
 	MANAGERS_COUNT
 };
 

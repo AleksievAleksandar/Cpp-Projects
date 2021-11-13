@@ -54,6 +54,8 @@ public:
 	void moveUp(const int32_t delta);
 	void moveDown(const int32_t delta);
 
+	bool containsPoint(const Point& pos) const;
+
 protected:
 	DrawParams _drawParams;
 

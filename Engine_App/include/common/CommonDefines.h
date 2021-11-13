@@ -18,7 +18,10 @@ namespace TextureId
 	enum ResourceId
 	{ 
 		RUNNING_GIRL, 
-		WHEEL
+		WHEEL,
+		BLACK_BACKROUND,
+		START_BUTTON,
+		STOP_BUTTON
 	};
 } //namespace TextureId
 

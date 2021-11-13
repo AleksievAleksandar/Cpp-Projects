@@ -22,12 +22,15 @@ add_executable(
 		${_INC_DIR}/game/config/GameCfg.h
 		${_INC_DIR}/game/entities/Hero.h
 		${_INC_DIR}/game/entities/Wheel.h
+		${_INC_DIR}/game/proxies/GameProxy.h
+		${_INC_DIR}/game/buttons/WheelButton.h
 
 		${_SRC_DIR}/engine/Engine.cpp
 		${_SRC_DIR}/engine/EngineConfigLoader.cpp
 		${_SRC_DIR}/game/Game.cpp
 		${_SRC_DIR}/game/entities/Hero.cpp
 		${_SRC_DIR}/game/entities/Wheel.cpp
+		${_SRC_DIR}/game/buttons/WheelButton.cpp
 		${_SRC_DIR}/main.cpp
 )
 

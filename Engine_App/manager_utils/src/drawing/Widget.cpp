@@ -105,11 +105,21 @@ double Widget::getRotation() const
 void Widget::rotateRight(double delta)
 {
 	this->_drawParams.rotationAngle += delta;
+
+	while (this->_drawParams.rotationAngle > FULL_ROTATION)
+	{
+		this->_drawParams.rotationAngle -= FULL_ROTATION;
+	}
 }
 
 void Widget::rotateLeft(double delta)
 {
 	this->_drawParams.rotationAngle -= delta;
+
+	while (this->_drawParams.rotationAngle < 0)
+	{
+		this->_drawParams.rotationAngle += FULL_ROTATION;
+	}
 }
 
 void Widget::activateAlphaModulation()
@@ -162,4 +172,13 @@ void Widget::moveUp(const int32_t delta)
 void Widget::moveDown(const int32_t delta)
 {
 	this->_drawParams.pos.y += delta;
+}
+
+bool Widget::containsPoint(const Point& pos) const
+{
+	const Rectangle bound(this->_drawParams.pos.x,
+						  this->_drawParams.pos.y,
+						  this->_drawParams.width,
+						  this->_drawParams.height);
+	return bound.isPointInside(pos);
 }

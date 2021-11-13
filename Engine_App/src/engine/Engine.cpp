@@ -78,6 +78,9 @@ void Engine::drawFrame()
 
 bool Engine::processFrame()
 {
+	this->_managerHandler.process();
+	this->_game.process();
+
 	while (this->_event.pollEvent())
 	{
 		if (this->_event.checkForExitRequest())
@@ -96,8 +99,6 @@ void Engine::handleEvent()
 {
 	this->_game.handleEvent(this->_event);
 }
-
-
 
 void Engine::limitFPS(const int64_t elapsedTimeMicroSeconds) const
 {
